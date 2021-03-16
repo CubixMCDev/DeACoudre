@@ -1,0 +1,54 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'java'
+}
+
+group 'cubixmc.com'
+sourceCompatibility = '1.8'
+
+/*
+uft-8
+ */
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+repositories {
+    mavenCentral()
+
+    flatDir { dirs 'libs' }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    compileOnly (name: 'spigot', ext: 'jar')
+}
+
+shadowJar {
+    dependencies {
+        exclude(dependency(name: 'spigot', ext:'jar'))
+        exclude(dependency(name: 'cubixapi', ext:'jar'))
+    }
+}
+
+build.dependsOn shadowJar

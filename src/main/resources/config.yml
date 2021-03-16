@@ -1,0 +1,125 @@
+rule:
+   min-players: 2
+   max-players: 18
+   arena-name: "classic"
+   starting-time: 30
+   jump-time: 10
+   start-life: 3
+   lobby-name: "lobby"
+   colors:
+      white:
+         type: "WOOL"
+         data: 0
+         name: "&fBlanc"
+      orange:
+         type: "WOOL"
+         data: 1
+         name: "&6Orange"
+      magenta:
+         type: "WOOL"
+         data: 2
+         name: "&dMagenta"
+      yellow:
+         type: "WOOL"
+         data: 4
+         name: "&eJaune"
+      lime:
+         type: "WOOL"
+         data: 5
+         name: "&aLime"
+      pink:
+         type: "WOOL"
+         data: 6
+         name: "&dRose"
+      lightgray:
+         type: "WOOL"
+         data: 8
+         name: "&7Gris pâle"
+      cyan:
+         type: "WOOL"
+         data: 9
+         name: "&3Turquoise"
+      brown:
+         type: "WOOL"
+         data: 12
+         name: "&6Brun"
+      red:
+         type: "WOOL"
+         data: 14
+         name: "&cRouge"
+      green:
+         type: "WOOL"
+         data: 13
+         name: "&2Vert"
+      mauve:
+         type: "WOOL"
+         data: 10
+         name: "&5Mauve"
+      gray:
+         type: "WOOL"
+         data: 7
+         name: "&8Gris"
+      glowstone:
+         type: "GLOWSTONE"
+         data: 0
+         name: "&eLumineux"
+         permission: "deacoudre.glowstone"
+      obsidian:
+         type: "OBSIDIAN"
+         data: 0
+         name: "&0Obsidienne"
+         permission: "deacoudre.obsidian"
+      diamond:
+         type: "DIAMOND_BLOCK"
+         data: 0
+         name: "&bDiamant"
+         permission: "deacoudre.diamond"
+      emerald:
+         type: "EMERALD_ORE"
+         data: 0
+         name: "&aÉmeraude"
+         permission: "deacoudre.emerald"
+      tnt:
+         type: "TNT"
+         data: 0
+         name: "&4Explosif"
+         sound: "EXPLODE"
+         permission: "deacoudre.tnt"
+         
+   
+location:
+   jump:
+      x: 68
+      y: 104
+      z: 223
+      yaw: -90
+      pitch: 0
+      world: world
+   waiting:
+      x: 72
+      y: 72
+      z: 245
+      yaw: -90
+      pitch: 0
+      world: world
+   watching:
+      x: 90
+      y: 70
+      z: 222
+      yaw: 90
+      pitch: -20
+      world: world
+
+message:
+   prefix: "&7[&bDéACoudre&7]"
+   fail-jump-not-die: "&7%player% a raté son saut mais &arevient &7car il lui reste encore une vie!"
+   success-dac: "&a%player% fait un dé à coudre et obtient une vie bonus!"
+   success-jump:
+      - "&7%player% a réussi son saut !"
+      - "&7%player% est un excellent plongeur !"
+      - "&7%player% vivra un tour de plus."
+      - "&7%player% veut vraiment gagné !"
+   fail-jump:
+      - "&c%player% s'est écrasé, dommage!"
+      - "&c%player% ne gagnera pas cette partie!"
+      - "&c%player% aurait du faire plus de dés a coudre!"

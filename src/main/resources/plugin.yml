@@ -1,0 +1,8 @@
+name: DeACoudre
+version: 1.3.2
+author: LouShunt
+main: eu.cubixmc.deacoudre.DeACoudre
+commands:
+   start:
+      description: "Commencer la partie"
+      permission: "deacoudre.start"
