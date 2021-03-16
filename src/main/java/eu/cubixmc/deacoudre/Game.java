@@ -197,12 +197,12 @@ public class Game {
 			playTask.resetTimer();
 		jumper.getPlayer().setGameMode(GameMode.ADVENTURE);
 		jumper.getPlayer().teleport(jump);
+		this.sendMessage(ChatColor.GRAY+jumper.getPlayer().getName()+" va maintenant sauter!");
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void splash(Location loc) {
 		boolean dac = false;
-		
 		while(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+1,loc.getBlockZ()).getBlock().isLiquid())
 			loc.add(0, 1, 0);
 		
@@ -262,6 +262,7 @@ public class Game {
 			jumperList.remove(currentJumper);
 			Random r = new Random();
 			this.sendMessage(ChatColor.translateAlternateColorCodes('&',main.getConfig().getStringList("message.fail-jump").get(r.nextInt(main.getConfig().getStringList("message.fail-jump").size()))).replace("%player%", currentJumper.getPlayer().getName()));
+			getCurrentJumper().getPlayer().playSound(getCurrentJumper().getPlayer().getLocation(),Sound.ENDERDRAGON_GROWL,100,1);
 			if(jumperList.size() == 1) {
 				this.sendMessage(ChatColor.AQUA+jumperList.get(0).getPlayer().getName()+" est le grand vainqueur !");
 				this.setEnding();
@@ -290,6 +291,14 @@ public class Game {
 		
 		return loc;
 	}
+
+	public Jumper getJumper(Player player){
+		for(Jumper jumper: getJumperList())
+			if(jumper.getPlayer().getName().equals(player.getName()))
+				return jumper;
+
+		return null;
+	}
 	
 	public void selectColor(Player player, String color) {
 		colorJumper.put(player.getName(), getColorList().get(color));
@@ -310,6 +319,7 @@ public class Game {
 			jumperList.remove(jump);
 			
 			if(jumperList.size() == 1) {
+				currentJumper = jumperList.get(0);
 				this.sendMessage(ChatColor.AQUA+jumperList.get(0).getPlayer().getName()+" est le grand vainqueur !");
 				this.setEnding();
 				return;
@@ -339,6 +349,7 @@ public class Game {
 	public static void setWaitingInventory(Player player) {
 		player.getInventory().clear();
 		player.getInventory().setHelmet(null);
+		player.setMaxHealth(20);
 		player.setHealth(player.getMaxHealth());
 		player.setFoodLevel(20);
 		player.setGameMode(GameMode.ADVENTURE);
@@ -379,6 +390,7 @@ public class Game {
 	public void setPlayingInventory(Jumper jumper) {
 		jumper.getPlayer().getInventory().clear();
 		jumper.getPlayer().setMaxHealth(jumper.getLife()*2);
+		jumper.getPlayer().setHealth(jumper.getPlayer().getMaxHealth());
 
 		ItemStack life = this.getJumperColor(jumper).getBlock().clone();
 		life.setAmount(jumper.getLife());

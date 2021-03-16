@@ -32,7 +32,7 @@ public class WaitingTask extends BukkitRunnable{
 					
 					if(time <= 10)
 						for(Player player: Bukkit.getOnlinePlayers())
-							Game.sendTitle(player, ChatColor.RED+""+time, ChatColor.YELLOW+"Pr�parez vous");
+							Game.sendTitle(player, ChatColor.RED+""+time, ChatColor.YELLOW+"Préparez vous");
 				}
 				
 				time--;

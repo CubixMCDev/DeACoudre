@@ -2,7 +2,9 @@ package eu.cubixmc.deacoudre;
 
 import eu.cubixmc.deacoudre.cmd.StartCmd;
 import eu.cubixmc.deacoudre.scoreboard.ScoreboardManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,6 +29,9 @@ public class DeACoudre extends JavaPlugin{
 		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		getCommand("start").setExecutor(new StartCmd(this));
+
+		for(Player player: Bukkit.getOnlinePlayers())
+			getScoreboardManager().onLogin(player);
 	}
 	
 	@Override
