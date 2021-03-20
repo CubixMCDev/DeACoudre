@@ -55,8 +55,9 @@ public class PersonalScoreboard {
                 objectiveSign.setLine(4, "§c");
                 objectiveSign.setLine(5, "§8» §7Vies: §e" + jumper.getLife());
             }
-            objectiveSign.setLine(6, "§2");
-            objectiveSign.setLine(7, "§8» " + ip);
+            objectiveSign.setLine(6,"§8» §7Round: §e"+main.getGame().getRound());
+            objectiveSign.setLine(7, "§2");
+            objectiveSign.setLine(8, "§8» " + ip);
         }else if(main.getGame().getState() == Game.State.ENDING){
             objectiveSign.setLine(1, "§1");
             objectiveSign.setLine(2, "§8» §7Gagnant: §e" + main.getGame().getJumperList().get(0).getPlayer().getName());

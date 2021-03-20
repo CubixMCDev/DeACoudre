@@ -42,6 +42,7 @@ public class Game {
 	private ArrayList<Jumper> jumperList;
 	private Jumper currentJumper;
 	private int jumperPos;
+	private int round;
 	
 	private HashMap<String, Color> colors;
 
@@ -72,6 +73,7 @@ public class Game {
 			colors.put(color.getName(), color);
 		}
 		colorJumper = new HashMap<>();
+		round = 1;
 		
 		//List of jumper
 		jumperList = new ArrayList<>();
@@ -128,7 +130,8 @@ public class Game {
 			}
 			Jumper j = new Jumper(player, life);
 			jumperList.add(j);
-			
+
+			player.teleport(jump);
 			setPlayingInventory(j);
 			player.setGameMode(GameMode.SPECTATOR);
 			player.getInventory().setHelmet(colorJumper.get(player.getName()).getBlock());
@@ -170,7 +173,9 @@ public class Game {
 		return currentJumper;
 	}
 	
-	
+	public int getRound(){
+		return round;
+	}
 	
 	public Location getWatch() {
 		return watch;
@@ -235,7 +240,7 @@ public class Game {
 		jumperPos++;
 		if(jumperPos >= jumperList.size()) {
 			jumperPos = 0;
-			Collections.shuffle(jumperList);
+			round++;
 		}
 		
 		jump(jumperList.get(jumperPos));
@@ -256,8 +261,7 @@ public class Game {
 		if(!currentJumper.isDead()) {
 			this.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("message.fail-jump-not-die")).replace("%player%", currentJumper.getPlayer().getName()));
 			setPlayingInventory(currentJumper);
-			jump(currentJumper);
-		}else {
+		}else{
 			currentJumper.getPlayer().setGameMode(GameMode.SPECTATOR);
 			jumperList.remove(currentJumper);
 			Random r = new Random();
@@ -265,16 +269,20 @@ public class Game {
 			getCurrentJumper().getPlayer().playSound(getCurrentJumper().getPlayer().getLocation(),Sound.ENDERDRAGON_GROWL,100,1);
 			if(jumperList.size() == 1) {
 				this.sendMessage(ChatColor.AQUA+jumperList.get(0).getPlayer().getName()+" est le grand vainqueur !");
+				for(Player player: Bukkit.getOnlinePlayers())
+					Game.sendTitle(player,ChatColor.YELLOW+player.getName(),ChatColor.GOLD+"a gagné la partie!");
 				this.setEnding();
 				return;
 			}
-			jumperPos++;
-			if(jumperPos >= jumperList.size()) {
-				jumperPos = 0;
-				Collections.shuffle(jumperList);
-				jump(jumperList.get(jumperPos));
-			}
 		}
+
+
+		jumperPos++;
+		if(jumperPos >= jumperList.size()) {
+			jumperPos = 0;
+			round++;
+		}
+		jump(jumperList.get(jumperPos));
 	}
 	
 	public Location getLocation(String path) {
