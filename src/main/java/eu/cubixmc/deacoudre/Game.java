@@ -51,7 +51,6 @@ public class Game {
 	//Config
 	private String prefix, map;
 	private Location jump;
-	private Location watch;
 	private Location waiting;
 	private int maxPlayer;
 	
@@ -82,7 +81,6 @@ public class Game {
 		//load Config
 		prefix = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("message.prefix"));
 		jump = getLocation("location.jump");
-		watch = getLocation("location.watching");
 		map = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("rule.arena-name"));
 		maxPlayer = main.getConfig().getInt("rule.max-players");
 		waiting = getLocation("location.waiting");
@@ -151,13 +149,12 @@ public class Game {
 	public void setEnding() {
 		this.state = State.ENDING;
 		
-		for(Player player: Bukkit.getOnlinePlayers())
+		for(Player player: Bukkit.getOnlinePlayers()) {
 			setEndingInventory(player);
-		
-		EndingTask task = new EndingTask(main,false);
-		task.runTaskLater(main, 200);
-		EndingTask task2 = new EndingTask(main,true);
-		task2.runTaskLater(main, 210);
+		}
+
+		EndingTask task = new EndingTask(main,false,10);
+		task.runTaskTimer(main, 0,20);
 	}
 	
 	public State getState() {
@@ -173,12 +170,8 @@ public class Game {
 		return currentJumper;
 	}
 	
-	public int getRound(){
+	public int getRound() {
 		return round;
-	}
-	
-	public Location getWatch() {
-		return watch;
 	}
 
 	public int getMaxPlayer() {
@@ -197,7 +190,7 @@ public class Game {
 	public void jump(Jumper jumper) {
 		currentJumper = jumper;
 		jumper.getPlayer().setFallDistance(0);
-		Game.sendTitle(jumper.getPlayer(),ChatColor.RED+"Saute!");
+		Game.sendTitle(jumper.getPlayer(),ChatColor.RED+"Saute!",ChatColor.YELLOW+"Round "+getRound());
 		if(playTask != null)
 			playTask.resetTimer();
 		jumper.getPlayer().setGameMode(GameMode.ADVENTURE);
@@ -254,7 +247,7 @@ public class Game {
 	
 	public void fail() {
 		currentJumper.fail();
-
+		currentJumper.getPlayer().setGameMode(GameMode.SPECTATOR);
 		for(Player player: Bukkit.getOnlinePlayers())
 			player.playSound(player.getLocation(), Sound.ANVIL_BREAK,100,1);
 
@@ -270,7 +263,7 @@ public class Game {
 			if(jumperList.size() == 1) {
 				this.sendMessage(ChatColor.AQUA+jumperList.get(0).getPlayer().getName()+" est le grand vainqueur !");
 				for(Player player: Bukkit.getOnlinePlayers())
-					Game.sendTitle(player,ChatColor.YELLOW+player.getName(),ChatColor.GOLD+"a gagné la partie!");
+					Game.sendTitle(player,ChatColor.GOLD+jumperList.get(0).getPlayer().getName(),ChatColor.YELLOW+"a gagné la partie!");
 				this.setEnding();
 				return;
 			}

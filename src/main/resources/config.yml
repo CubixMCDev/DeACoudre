@@ -106,13 +106,6 @@ location:
       yaw: -90
       pitch: 0
       world: world
-   watching:
-      x: 90
-      y: 70
-      z: 222
-      yaw: 90
-      pitch: -20
-      world: world
 
 message:
    prefix: "&eCubixMC &6»"

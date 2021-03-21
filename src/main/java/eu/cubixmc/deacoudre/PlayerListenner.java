@@ -84,7 +84,7 @@ public class PlayerListenner implements Listener {
 		}else {
 			event.setJoinMessage(ChatColor.YELLOW+event.getPlayer().getName()+" a rejoint la partie en tant que spectateur !");
 			main.getGame().setEndingInventory(event.getPlayer());
-			event.getPlayer().teleport(main.getGame().getWatch());
+			event.getPlayer().teleport(main.getGame().getCurrentJumper().getPlayer().getLocation());
 		}
 	}
 	

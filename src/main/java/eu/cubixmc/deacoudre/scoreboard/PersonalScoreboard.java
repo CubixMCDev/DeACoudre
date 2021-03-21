@@ -49,7 +49,7 @@ public class PersonalScoreboard {
 
 
             objectiveSign.setLine(1, "§1");
-            objectiveSign.setLine(2, "§8» §7Joueurs: §e" + Bukkit.getOnlinePlayers().size() + "§6/§e" + main.getGame().getJumperList().size());
+            objectiveSign.setLine(2, "§8» §7Joueurs: §e" + main.getGame().getJumperList().size() + "§6/§e" + main.getGame().getJumperColorList().size());
             objectiveSign.setLine(3, "§8» §7Joueur qui saute: §e" + main.getGame().getCurrentJumper().getPlayer().getName());
             if(jumper != null) {
                 objectiveSign.setLine(4, "§c");
